@@ -22,90 +22,83 @@
  */
 package org.ho.yaml;
 
-import static yaml.parser.YamlParser.MAP_CLOSE;
-import static yaml.parser.YamlParser.MAP_SEPARATOR;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Stack;
-
-import org.ho.util.Logger;
+import java.util.*;
 import org.ho.yaml.wrapper.MapWrapper;
 import org.ho.yaml.wrapper.ObjectWrapper;
+
+import static yaml.parser.YamlParser.MAP_CLOSE;
+import static yaml.parser.YamlParser.MAP_SEPARATOR;
 
 
 class MapState extends State {
 
-	String key;
+    String key;
 
-	MapState(Map<String, ObjectWrapper> aliasMap, Stack<State> stack, YamlDecoder decoder, Logger logger) {
-		super(aliasMap, stack, decoder, logger);
-	}
-    
-    protected MapWrapper getMap(){
-        return (MapWrapper)getWrapper();
+    MapState(Map<String, ObjectWrapper> aliasMap, Stack<State> stack, YamlDecoder decoder) {
+        super(aliasMap, stack, decoder);
     }
-    
-	@Override
-	public void nextOnContent(String type, String content) {
-		if (key == null)
-			key = content;
-		else {
-			ObjectWrapper newObject = null;
-            if ("alias".equals(type)){
+
+    protected MapWrapper getMap() {
+        return (MapWrapper) getWrapper();
+    }
+
+    @Override
+    public void nextOnContent(String type, String content) {
+        if (key == null)
+            key = content;
+        else {
+            ObjectWrapper newObject;
+            if ("alias".equals(type)) {
                 String alias = content.substring(1);
-                if ( aliasMap.containsKey(alias)) {
+                if (aliasMap.containsKey(alias)) {
                     newObject = aliasMap.get(alias);
                     final String currentKey = key;
-                    newObject.addCreateHandler(new ObjectWrapper.CreateListener(){
+                    newObject.addCreateHandler(new ObjectWrapper.CreateListener() {
                         public void created(Object obj) {
                             getMap().put(currentKey, obj);
                         }
                     });
                 }
-            }
-            else {
-                
+            } else {
+
                 newObject = decoder.getConfig().getWrapperSetContent(expectedType(type), content);
                 getMap().put(Utilities.decodeSimpleType(key), newObject.getObject());
-			    
+
                 if (getAnchorname() != null)
                     markAnchor(newObject, getAnchorname());
             }
-			clear();
-			key = null;
-		}
-	}
+            clear();
+            key = null;
+        }
+    }
 
-	@Override
-	public void nextOnEvent(int event) {
-		switch (event) {
-		case MAP_SEPARATOR:
-			break;
-		case MAP_CLOSE:
-			stack.pop();
-			stack.peek().childCallback(wrapper);
-			break;
-		default:
-			super.nextOnEvent(event);
-		}
+    @Override
+    public void nextOnEvent(int event) {
+        switch (event) {
+            case MAP_SEPARATOR:
+                break;
+            case MAP_CLOSE:
+                stack.pop();
+                stack.peek().childCallback(wrapper);
+                break;
+            default:
+                super.nextOnEvent(event);
+        }
 
-	}
+    }
 
-	@Override
-	public void childCallback(ObjectWrapper child) {
-		getMap().put(Utilities.decodeSimpleType(key), child.getObject());
-		clear();
-		key = null;
-	}
-    
-	@Override
-	protected String expectedType() {
+    @Override
+    public void childCallback(ObjectWrapper child) {
+        getMap().put(Utilities.decodeSimpleType(key), child.getObject());
+        clear();
+        key = null;
+    }
+
+    @Override
+    protected String expectedType() {
         if (getClassname() != null)
             return getClassname();
-        else{
+        else {
             Class type = getMap().getExpectedType(key);
             if (type == null)
                 return null;
@@ -119,6 +112,6 @@ class MapState extends State {
                     return ret;
             }
         }
-	}
+    }
 
 }

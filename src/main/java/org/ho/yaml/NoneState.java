@@ -25,7 +25,6 @@ package org.ho.yaml;
 import java.util.Map;
 import java.util.Stack;
 
-import org.ho.util.Logger;
 import org.ho.yaml.wrapper.ObjectWrapper;
 
 
@@ -40,8 +39,8 @@ import org.ho.yaml.wrapper.ObjectWrapper;
  */
 class NoneState extends State{
     
-	NoneState(Map<String, ObjectWrapper> aliasMap, Stack<State> stack, YamlDecoder decoder, Logger logger) {
-        super(aliasMap, stack, decoder, logger);
+	NoneState(Map<String, ObjectWrapper> aliasMap, Stack<State> stack, YamlDecoder decoder) {
+        super(aliasMap, stack, decoder);
     }
 
     @Override

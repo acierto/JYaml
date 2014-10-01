@@ -25,8 +25,6 @@ package org.ho.yaml;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
-
-import org.ho.util.Logger;
 import org.ho.yaml.exception.YamlException;
 import org.ho.yaml.wrapper.ObjectWrapper;
 
@@ -34,53 +32,41 @@ import yaml.parser.YamlParserEvent;
 
 class JYamlParserEvent extends YamlParserEvent {
 
-	Stack<State> stack = new Stack<State>();
-	Map<String, ObjectWrapper> aliasMap = new HashMap<String, ObjectWrapper>();
-	
-	public JYamlParserEvent(Logger logger, YamlDecoder decoder){
-		stack.push(new NoneState(aliasMap, stack, decoder, logger));
-	}
-	
-    public JYamlParserEvent(Object object, Logger logger, YamlDecoder decoder){
-        // TODO
+    Stack<State> stack = new Stack<State>();
+    Map<String, ObjectWrapper> aliasMap = new HashMap<>();
+
+    public JYamlParserEvent(YamlDecoder decoder) {
+        stack.push(new NoneState(aliasMap, stack, decoder));
     }
-    
-	public JYamlParserEvent(Class clazz, Logger logger, YamlDecoder decoder){
-		this(logger, decoder);
-		String classname = ReflectionUtil.className(clazz);
+
+    public JYamlParserEvent(Class clazz, YamlDecoder decoder) {
+        this(decoder);
+        String classname = ReflectionUtil.className(clazz);
         stack.peek().setDeclaredClassname(classname);
-//        stack.peek().setWrapper(decoder.getConfig().getWrapper(clazz));
-//        if (!clazz.isArray() && !ReflectionUtil.isSimpleType(clazz))
-//	        try {
-//	            stack.peek().setWrapper(clazz.newInstance());
-//	        } catch (Exception e){
-//	            throw new YamlException("Can't instantiate object of type " + clazz.getName());
-//	        }
-        
-	}
-	
-	@Override
-	public void content(String a, String b) {
-		stack.peek().nextOnContent(a, b);
-	}
+    }
 
-	@Override
-	public void error(Exception e, int line) {
+    @Override
+    public void content(String a, String b) {
+        stack.peek().nextOnContent(a, b);
+    }
+
+    @Override
+    public void error(Exception e, int line) {
         throw new YamlException(e.getMessage(), line);
-	}
+    }
 
-	@Override
-	public void event(int c) {
-		stack.peek().nextOnEvent(c);
-	}
+    @Override
+    public void event(int c) {
+        stack.peek().nextOnEvent(c);
+    }
 
-	@Override
-	public void property(String a, String b) {
-		stack.peek().nextOnProperty(a, b);
-	}
+    @Override
+    public void property(String a, String b) {
+        stack.peek().nextOnProperty(a, b);
+    }
 
-	public Object getBean(){
-		return stack.peek().getWrapper().getObject();
-	}
-	
+    public Object getBean() {
+        return stack.peek().getWrapper().getObject();
+    }
+
 }
