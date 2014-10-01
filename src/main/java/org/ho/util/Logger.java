@@ -24,7 +24,7 @@ package org.ho.util;
 
 public class Logger {
 
-	public enum Level {INFO, WARN, NONE};
+	public enum Level {INFO, WARN, NONE}
 	
 	Level level = Level.WARN;
 

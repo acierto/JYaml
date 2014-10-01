@@ -1,4 +1,5 @@
 /*
+/*
  * Copyright (c) 2005, Yu Cheung Ho
  * All rights reserved.
  *
@@ -20,10 +21,44 @@
  * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF 
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package org.ho.yaml.tests;
+package org.ho.yaml;
 
+public class Department {
 
- public class Node {
-    public int         nr;
-    public int[]       prefix;
- }
+    String name;
+    
+    long numEmployees;
+
+    public Department(){}
+    
+    public Department(String name){
+        this.name = name;
+    }
+    /**
+     * @return Returns the name.
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * @param name The name to set.
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    /**
+     * @return Returns the numEmployees.
+     */
+    public long getNumEmployees() {
+        return numEmployees;
+    }
+
+    /**
+     * @param numEmployees The numEmployees to set.
+     */
+    public void setNumEmployees(long numEmployees) {
+        this.numEmployees = numEmployees;
+    }
+}

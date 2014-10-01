@@ -1,4 +1,4 @@
-package org.ho.yaml.tests;
+package org.ho.yaml;
 
 import java.awt.event.KeyEvent;
 

@@ -1,4 +1,4 @@
-package org.ho.yaml.tests;
+package org.ho.yaml;
 
 import java.io.File;
 import java.util.Map;

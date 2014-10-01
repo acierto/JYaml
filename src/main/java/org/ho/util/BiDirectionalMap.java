@@ -33,7 +33,7 @@ import java.util.Map;
  */
 public class BiDirectionalMap<K,V> extends HashMap<K,V> {
 
-	HashMap<V,K> reverse = new HashMap<V,K>();
+	HashMap<V,K> reverse = new HashMap<>();
 
 	@Override
 	public V put(K key, V value) {

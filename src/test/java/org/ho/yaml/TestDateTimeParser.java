@@ -21,7 +21,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.ho.yaml.tests;
+package org.ho.yaml;
 
 import java.text.DateFormat;
 import java.text.ParseException;

@@ -1,4 +1,4 @@
-package org.ho.yaml.tests;
+package org.ho.yaml;
 
 public class PDG {
    public String cacheline;
