@@ -3,16 +3,26 @@ package org.ho.yaml;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.PrintWriter;
-import org.junit.Assert;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.apache.commons.io.FileUtils;
+import org.junit.*;
 
-@Ignore
 public class JyamlConfigTests {
+
+    private File jyamlFile;
+
+    @Before
+    public void setUp() {
+        jyamlFile = new File(FileUtils.getTempDirectory(), "jyaml.yml");
+    }
+
+    @After
+    public void tearDown() {
+        FileUtils.deleteQuietly(jyamlFile);
+    }
 
     @Test
     public void testJyamlYml() throws Exception {
-        PrintWriter out = new PrintWriter(new FileWriter("jyaml.yml"));
+        PrintWriter out = new PrintWriter(new FileWriter(jyamlFile));
         out.print("minimalOutput: false\r\n" +
                 "indentAmount: \"    \"\r\n" +
                 "suppressWarnings: true\r\n" +
@@ -22,8 +32,7 @@ public class JyamlConfigTests {
         out.close();
         Person p = new Person();
         System.out.println(Yaml.dump(p));
-        Assert.assertEquals("--- !person {}\r\n", Yaml.dump(p));
-        Assert.assertTrue(new File("jyaml.yml").delete());
+        Assert.assertEquals("--- !org.ho.yaml.Person {}".trim(), Yaml.dump(p).trim());
     }
 
 }
