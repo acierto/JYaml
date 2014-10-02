@@ -429,7 +429,7 @@ public class YamlConfig implements YamlOperations, Cloneable{
         T ret = null;
         try {
             ret = dec.readObjectOfType(clazz);
-        } catch (EOFException e) {}
+        } catch (EOFException ignored) {}
         return ret;
     }
     

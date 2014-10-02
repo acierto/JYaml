@@ -26,6 +26,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 public class Company {
+
     String name;
 
     Person president;
@@ -35,7 +36,7 @@ public class Company {
     List<Department> departments;
 
     Department[] departmentArray;
-    
+
     BigDecimal assets;
 
     /**
