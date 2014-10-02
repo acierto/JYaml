@@ -22,10 +22,7 @@
  */
 package org.ho.yaml.wrapper;
 
-import java.awt.Dimension;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
+import java.awt.*;
 
 public class DimensionWrapper extends DelayedCreationBeanWrapper {
 
@@ -33,20 +30,19 @@ public class DimensionWrapper extends DelayedCreationBeanWrapper {
         super(type);
     }
 
-    public String[] getPropertyNames(){
+    public String[] getPropertyNames() {
         return new String[]{"width", "height"};
     }
-    
+
     @Override
     protected Object createObject() {
-        return new Dimension(((Number)values.get("width")).intValue(), ((Number)values.get("height")).intValue());
+        return new Dimension(((Number) values.get("width")).intValue(), ((Number) values.get("height")).intValue());
     }
 
     @Override
     public Object createPrototype() {
         return new Dimension();
     }
-    
-    
+
 
 }

@@ -48,7 +48,6 @@ public class YamlDecoder {
      *
      * @param in     the InputStream to read from.
      * @param config the YAML config
-     * @throws FileNotFoundException
      */
     YamlDecoder(InputStream in, YamlConfig config) {
         this.config = config;
@@ -184,7 +183,7 @@ public class YamlDecoder {
     public void close() {
         try {
             in.close();
-        } catch (IOException e) {
+        } catch (IOException ignored) {
         }
     }
 

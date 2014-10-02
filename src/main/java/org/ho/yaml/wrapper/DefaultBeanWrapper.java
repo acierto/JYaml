@@ -24,7 +24,6 @@ package org.ho.yaml.wrapper;
 
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -62,7 +61,7 @@ public class DefaultBeanWrapper extends AbstractWrapper implements MapWrapper {
                 rm.setAccessible(true);
                 return rm.invoke(obj, null);
             }
-		} catch (Exception e){   
+		} catch (Exception ignored){
         }
 		try {
 			Field field = type.getDeclaredField(name);
@@ -70,7 +69,7 @@ public class DefaultBeanWrapper extends AbstractWrapper implements MapWrapper {
                 field.setAccessible(true);
             	return field.get(obj);
             }
-		} catch (Exception e){
+		} catch (Exception ignored){
         }
         throw new PropertyAccessException("Can't get " + name + " property on type " + type + ".");
     }
@@ -81,21 +80,19 @@ public class DefaultBeanWrapper extends AbstractWrapper implements MapWrapper {
             if (config.isPropertyAccessibleForEncoding(prop)){
                 Method wm = prop.getWriteMethod();
                 wm.setAccessible(true);
-                wm.invoke(getObject(), new Object[]{value});
+                wm.invoke(getObject(), value);
                 return;
             }
 			
-		} catch (Exception e){}
+		} catch (Exception ignored){}
 		try {
 			Field field = type.getDeclaredField(name);
 			if (config.isFieldAccessibleForDecoding(field)){
 			    field.setAccessible(true);
             	field.set(getObject(), value);
             }
-            return;
-		} catch (Exception e){
+        } catch (Exception ignored){
         }
-		// ignore this
 	}
 
 	public Class getPropertyType(String name) {
@@ -108,7 +105,7 @@ public class DefaultBeanWrapper extends AbstractWrapper implements MapWrapper {
                     field.setAccessible(true);
                     return field.getType();
                 }
-            } catch (Exception e){}
+            } catch (Exception ignored){}
             return null;
         }
 	}
@@ -129,14 +126,14 @@ public class DefaultBeanWrapper extends AbstractWrapper implements MapWrapper {
 
     public Collection keys() {
         Object prototype = createPrototype();
-        Set<String> set = new HashSet<String>();
+        Set<String> set = new HashSet<>();
         for (PropertyDescriptor prop: ReflectionUtil.getProperties(getType())){
             if (config.isPropertyAccessibleForEncoding(prop))
                 try {
                     if (!Utilities.same(getProperty(getObject(), prop.getName()), 
                             getProperty(prototype, prop.getName())))
                     set.add(prop.getName());
-                } catch (Exception e){}
+                } catch (Exception ignored){}
         }
         for (Field field: getType().getDeclaredFields())
             if (config.isFieldAccessibleForEncoding(field)){
@@ -144,11 +141,11 @@ public class DefaultBeanWrapper extends AbstractWrapper implements MapWrapper {
                 try {
                     if (!Utilities.same(field.get(prototype), field.get(getObject())))
                         set.add(field.getName());
-                } catch (Exception e){}
+                } catch (Exception ignored){}
             }
         
         // sort the keys alphabetically
-        List<String> ret = new ArrayList<String>(set);
+        List<String> ret = new ArrayList<>(set);
         Collections.sort(ret, new Comparator<String>(){
             public int compare(String o1, String o2) {
                 return o1.compareTo(o2);

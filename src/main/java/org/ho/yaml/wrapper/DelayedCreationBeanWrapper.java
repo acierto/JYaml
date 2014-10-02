@@ -32,13 +32,13 @@ import org.ho.yaml.exception.PropertyAccessException;
 
 public abstract class DelayedCreationBeanWrapper extends DefaultBeanWrapper {
 
-    protected Map<String, Object> values = new HashMap<String, Object>();
+    protected Map<String, Object> values = new HashMap<>();
     
     protected HashSet<String> keys;
 
     public DelayedCreationBeanWrapper(Class type) {
         super(type);
-        keys = new HashSet<String>(Arrays.asList(getPropertyNames()));
+        keys = new HashSet<>(Arrays.asList(getPropertyNames()));
     }
     
     @Override

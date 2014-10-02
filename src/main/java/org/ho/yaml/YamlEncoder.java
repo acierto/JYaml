@@ -132,10 +132,10 @@ public class YamlEncoder{
         if (obj instanceof String)
         	return;
         mark(obj);
-        if (refCount(obj) > 1)
-        	return;
-        else if (ReflectionUtil.isSimpleType(obj.getClass()))
-            return;
+        if (refCount(obj) > 1) {
+        }
+        else if (ReflectionUtil.isSimpleType(obj.getClass())) {
+        }
         else {
             ObjectWrapper wrapper = getConfig().getWrapper(obj);
             if (wrapper instanceof CollectionWrapper)

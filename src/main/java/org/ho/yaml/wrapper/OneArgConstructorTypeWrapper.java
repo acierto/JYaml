@@ -55,7 +55,7 @@ public class OneArgConstructorTypeWrapper extends DefaultSimpleTypeWrapper imple
             super.setObject(obj);
         else
             try {
-                obj = type.getConstructor(new Class[]{expectedArgType()}).newInstance(new Object[]{obj});
+                obj = type.getConstructor(new Class[]{expectedArgType()}).newInstance(obj);
                 super.setObject(obj);
             } catch (Exception e){
                 throw new YamlException(e);

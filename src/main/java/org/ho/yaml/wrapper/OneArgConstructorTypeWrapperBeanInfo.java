@@ -34,8 +34,7 @@ public class OneArgConstructorTypeWrapperBeanInfo extends SimpleBeanInfo {
             new PropertyDescriptor("type", OneArgConstructorTypeWrapper.class);
           PropertyDescriptor argTypePD =
               new PropertyDescriptor("argType", OneArgConstructorTypeWrapper.class);
-          PropertyDescriptor rv[] = {typePD, argTypePD};
-          return rv;
+            return new PropertyDescriptor[]{typePD, argTypePD};
         } catch (IntrospectionException e) {
           throw new Error(e.toString());
         }

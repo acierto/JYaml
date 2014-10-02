@@ -144,12 +144,12 @@ public class Utilities {
         try {
             Long.parseLong(str);
             return true;
-        } catch (Exception e) {
+        } catch (Exception ignored) {
         }
         try {
             Double.parseDouble(str);
             return true;
-        } catch (Exception e) {
+        } catch (Exception ignored) {
         }
         return false;
     }

@@ -22,9 +22,6 @@
  */
 package org.ho.yaml.wrapper;
 
-import org.ho.yaml.ReflectionUtil;
-
-
 public class DefaultSimpleTypeWrapper extends AbstractWrapper implements SimpleObjectWrapper{
 
     public DefaultSimpleTypeWrapper(Class type) {

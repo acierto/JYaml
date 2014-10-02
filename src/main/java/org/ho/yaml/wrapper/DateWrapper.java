@@ -26,8 +26,6 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.Date;
 
-import org.ho.yaml.Utilities;
-import org.ho.yaml.YamlConfig;
 import org.ho.yaml.exception.YamlException;
 
 public class DateWrapper extends DefaultSimpleTypeWrapper implements WrapperFactory {
@@ -87,7 +85,7 @@ public class DateWrapper extends DefaultSimpleTypeWrapper implements WrapperFact
 
     @Override
     public Object getOutputValue() {
-        return formateDate((Date)getObject());
+        return formattedDate((Date) getObject());
     }
     
     /**
@@ -97,7 +95,7 @@ public class DateWrapper extends DefaultSimpleTypeWrapper implements WrapperFact
      *
      * @author Steve Leach
      */
-    String formateDate(Date date) {
+    String formattedDate(Date date) {
         DateFormat fmt = config.getDateFormatter();
         if (fmt == null) {
             return "" + date.getTime();

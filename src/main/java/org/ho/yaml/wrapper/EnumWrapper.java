@@ -49,7 +49,7 @@ public class EnumWrapper extends AbstractWrapper implements SimpleObjectWrapper 
     public void setObject(Object obj) {
         if (obj instanceof String){
             try {
-                super.setObject(getType().getMethod("valueOf", new Class[]{String.class}).invoke(getType(), new Object[]{obj}));
+                super.setObject(getType().getMethod("valueOf", new Class[]{String.class}).invoke(getType(), obj));
             } catch (Exception e){
                 throw new YamlException("Problem getting " + obj + " value of enum type " + type, e);
             }
